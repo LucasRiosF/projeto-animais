@@ -1,47 +1,56 @@
+import { AnimalRepositorio } from "../models/AnimalRepositorio.js";
+import { Animal } from "../models/Animal.js"; 
+
+const animalRepositorio = new AnimalRepositorio();
+
 export const buscarTodosAnimais = (req, res) => {
-    return res.status(200).send({
-        message: "Todos animais via controller",
-        status: "OK"
-    });
-};
+    const animais = animalRepositorio.buscarTodosAnimais();
+    if (animais.length) {
+        return res.status(200).json(animais);
+      }
+      return res.status(200).json({ message: "Não há animais cadastrados" });
+    };
 
 export const buscarAnimalPorId = (req, res) => {
     const { id } = req.params;
-    return res.status(200).send({
-        message: `Animal com id ${id}`,
-        origem: "controller"
-    });
-}
+    const animal = animalRepositorio.buscarAnimalPorId(id);
+
+    if (!animal) res.status(404).send({ message: "Animal não encontrado!" });
+
+    return res.send(animal);
+  };
+
 
 export const criarAnimal = (req, res) => {
-    const { nome, tipo, idade, cor, imagem, vacinacao  } = req.body;
+    const { nome, tipo, idade, cor, imagem, vacinado  } = req.body;
+    const animal = new Animal(nome, tipo, idade, cor, imagem, vacinado);
 
-    if(!nome || !tipo || !idade || !cor || !imagem ||!vacinacao ){
-        return res.status(400).send({ message: "Dados inválidos" });
-    }
-    return res.status(201).send({
-        message: `Rota POST animal`,
-        origem: "controller"
-    });
+    animalRepositorio.criarAnimal(animal);
+
+    return res.status(201).send(animal);
 }
 
 export const atualizarAnimal = (req, res) => {
     const { id } = req.params;
-    const { nome, tipo, idade, cor, imagem  } = req.body;
+    const {nome, tipo, idade, cor, imagem, vacinado } = req.body;
 
-    if(!nome || !tipo || !idade || !cor || !imagem ||!vacinacao ){
-        return res.status(400).send({ message: "Dados inválidos" });
-    }
-    return res.status(201).send({
-        message: `Rota PUT animal por id ${id}`,
-        origem: "controller"
-    });
+    const animal = animalRepositorio.buscarAnimalPorId(id);
+
+    if (!animal) res.status(404).send({ message: "Animal não encontrado!" });
+
+  animalRepositorio.atualizarAnimal(nome, tipo, idade, cor, imagem, vacinado);
+
+  return res.send(animal);
 };
 
 export const deletarAnimal = (req, res) => {
     const { id } = req.params;
-    return res.status(200).send({
-        message: `Rota DELETE animal com id ${id}`,
-        origem: "controller"
-    });
-}
+    const animal = animalRepositorio.buscarAnimalPorId(id)
+    
+    if (!animal) res.status(404).send({ message: "Animal não encontrado!" });
+
+    animalRepositorio.deletarAnimal(id);
+  
+    return res.send(animal);
+};
+

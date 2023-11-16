@@ -3,19 +3,19 @@ export class AnimalRepositorio {
         this.animais = []
     }
 
-    pegarAnimais(){
+    buscarTodosAnimais(){
         return this.animais;
     }
 
-    pegarAnimalPorId(){
+    buscarAnimalPorId(){
         return this.animais.find((animal) => animal.id === id);
     }
 
-    adicionarAnimal(animal){
+    criarAnimal(animal){
         this.animais.push(animal)
     }
 
-    updateAnimal(id, nome, tipo, idade, cor, imagem, vacinado){
+    atualizarAnimal(id, nome, tipo, idade, cor, imagem, vacinado){
         const animal = this.pegarAnimalPorId(id);
     
 

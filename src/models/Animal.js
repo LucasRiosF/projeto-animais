@@ -6,7 +6,7 @@ export class Animal {
         this.nome = nome;
         this.tipo = tipo;
         this.idade = idade;
-        this.cor = cor;
+        this.cor =  cor;
         this.imagem = imagem;
         this.vacinado = vacinado;
     }
