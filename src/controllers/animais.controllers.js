@@ -25,9 +25,34 @@ export const criarAnimal = (req, res) => {
     const { nome, tipo, idade, cor, imagem, vacinado  } = req.body;
     const animal = new Animal(nome, tipo, idade, cor, imagem, vacinado);
 
+    /*const UrlValida = (url) => {
+      if (url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+        return true;
+      } else{
+        return false;
+      }
+    }
+
+
+      if(nome.length < 3 || nome.length > 50){
+        return res.status(404).send({message: "nome inválido"})
+      } else if(!Number.isInteger(idade)){
+        return res.status(404).send({message: "idade inválida"})
+        } else if(type.length > 30){
+          return res.status(404).send({message: "tamanho inválido"})
+        }else if (cor == Number){
+          return res.status(404).send({message: "cor inválida"})
+        }else if (typeof vacinado == Boolean){
+          return res.status(404).send({message: "vacina inválida"})
+        }else if (!UrlValida(imagem)){
+          return res.status(404).send({message: "URL inválido"})
+        }*/
+
+  
+
     animalRepositorio.criarAnimal(animal);
 
-    return res.status(201).send(animal);
+    return res.status(200).send(animal);
 }
 
 export const atualizarAnimal = (req, res) => {
